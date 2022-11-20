@@ -129,7 +129,27 @@ def findzone():
 
                   return render_template('contamination.html', msg="YEAH YOU SURELY TRAVEL THROUGH THIS AREA THERE IS NO COVID")            
       
-                
+        
+@app.route('/removezone',methods=['POST'])
+def removezone():
+  if request.method == 'POST':
+  
+    location = request.form['location']
+   
+    # pincode= request.form['pincode']
+
+    print("i am in providing info")
+    
+
+    if(location!=""):
+
+            sql = "DELETE FROM addinfo WHERE LOCATION=?"
+            stmt = ibm_db.prepare(conn, sql)
+            ibm_db.bind_param(stmt,1,location)
+            ibm_db.execute(stmt)
+            return render_template('admin.html', msg="THE ZONE IS REMOVED SUCCESSFULLY")   
+          
+            
 
 
 @app.route("/complaint")
